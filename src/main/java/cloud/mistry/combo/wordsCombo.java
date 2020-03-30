@@ -11,7 +11,7 @@ public class wordsCombo
         final String myWord = "RANDOM";
         final String myNumber = "813358";
 
-        System.out.println( "Perform lookup on a word: " +myWord );
+        System.out.println( "\nPerform lookup on a word: " +myWord );
         System.out.println( myCombo.lookupWord(myWord) );
 
 
