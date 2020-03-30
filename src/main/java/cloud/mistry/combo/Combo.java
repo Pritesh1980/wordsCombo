@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Combo
@@ -14,15 +15,32 @@ public class Combo
     private Multimap<Integer,Character> ALPHABET = HashMultimap.create(26,3);
 
 
+    /**
+     * Public constructor. Simply initialises an Alphabet to perform lookups against.
+     */
     public Combo()
     {
         initialiseAlphabet();
-        logger.debug("Alphabet: " +ALPHABET);
+        logger.info("Alphabet: " +ALPHABET);
     }
 
 
+    /**
+     * Takes in a 6 character word and returns the numerical pattern for it.
+     *
+     * @param word - The word to lookup.
+     * @return - The integers that represent the word.
+     */
+    public ArrayList<Integer> lookupWord(String word)
+    {
+        if( word==null || word.length()!=6 )
+        {
+            throw new IllegalArgumentException(String.format("Error. %s needs to be a 6 character string", word));
+        }
 
-    public Object lookupWord(String word) {
+        word = word.toUpperCase();
+        logger.info("Analysing: " + word);
+
         return null;
     }
 
@@ -32,10 +50,16 @@ public class Combo
     }
 
 
+
+
+    /**
+     * Initialised a Multivalue hashmap {@link Multimap}. The key is a number between 0-9 and the values are the letters that
+     * match such that 1=A, 2=B...10=J, 1=K etc.
+     */
     private void initialiseAlphabet()
     {
-        Character aChar = new Character('A');
-        Integer currCount = 1;
+        Character aChar = 'A';
+        int currCount = 1;
 
         for( int charPosition=1; charPosition!=CHARS_IN_ALPHABET+1; charPosition++, currCount++)
         {
