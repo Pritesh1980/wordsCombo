@@ -1,16 +1,16 @@
 package cloud.mistry.combo;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ComboTest
+public class ComboTest
 {
     private static cloud.mistry.combo.Combo combo = null;
 
-    @BeforeAll
-    public static void setup()
+    @BeforeEach
+    public void setup()
     {
         combo = new Combo();
     }
@@ -35,7 +35,8 @@ class ComboTest
     public void testLookupLongWord()
     {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                ()-> combo.lookupWord("COWABUNGA"));
+                ()-> combo.lookupWord("COWABUNGA"), "Wrong exception thrown");
         System.out.println(exception.getMessage());
     }
+
 }
