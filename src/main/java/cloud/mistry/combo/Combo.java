@@ -66,7 +66,26 @@ public class Combo
 
     public List<String> lookupNumber(String nums)
     {
-        return null;
+        if( nums==null || nums.length()!=6 )
+        {
+            throw new IllegalArgumentException(String.format("Error. %s needs to be a 6 character string", nums));
+        }
+
+        for( int i=0; i<6; i++ )
+        {
+            if( !Character.isDigit(nums.charAt(i)) )
+            {
+                throw new IllegalArgumentException(String.format("Error. All elements of passed in nums %s must be numbers", nums));
+            }
+        }
+
+        logger.info("Analysing: " + nums);
+
+        ArrayList<String> retVals = new ArrayList<>(1);
+
+        // TODO: Populate retVals
+
+        return retVals;
     }
 
 
