@@ -54,4 +54,43 @@ public class ComboTest
         Collection<Integer> expected = asList(1, 1, 1, 1, 1, 1);
         assertEquals(expected, ret, "Returned number array not as expected.");
     }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupValidWord02()
+    {
+        final String word = "HAMMER";
+        Collection<?> ret = combo.lookupWord(word);
+
+        System.out.println(ret);
+        assertEquals(6, ret.size(), "Returned number list was of incorrect length.");
+
+        Collection<Integer> expected = asList(8, 1, 3, 3, 5, 8);
+        assertEquals(expected, ret, "Returned number array not as expected.");
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupValidWord03()
+    {
+        final String word = "xxxxxx";
+        Collection<?> ret = combo.lookupWord(word);
+
+        System.out.println(ret);
+        assertEquals(6, ret.size(), "Returned number list was of incorrect length.");
+
+        Collection<Integer> expected = asList(4, 4, 4, 4, 4, 4);
+        assertEquals(expected, ret, "Returned number array not as expected.");
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupValidWord04()
+    {
+        final String word = "RANDOM";
+        Collection<?> ret = combo.lookupWord(word);
+
+        System.out.println(ret);
+        assertEquals(6, ret.size(), "Returned number list was of incorrect length.");
+
+        Collection<Integer> expected = asList(8, 1, 4, 4, 5, 3);
+        assertEquals(expected, ret, "Returned number array not as expected.");
+    }
 }

@@ -43,19 +43,31 @@ public class Combo
 
         final ArrayList<Integer> numList = new ArrayList<>(6);
 
-        // TODO: Populate numList
+        // Convert each char to correct number and add to array to return
+        for( int i=0; i<6; i++ )
+        {
+            numList.add(convertCharToNum(word.charAt(i)));
+        }
 
         return numList;
     }
 
+    /**
+     * Converts the char to the ordinal I want.
+     *
+     * @param ch The character to convert.
+     * @return An Integer representation of the character.
+     */
+    private Integer convertCharToNum(char ch)
+    {
+        return (ch-64) % 10;
+    }
 
 
     public List<String> lookupNumber(String nums)
     {
         return null;
     }
-
-
 
 
     /**
