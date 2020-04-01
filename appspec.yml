@@ -2,4 +2,4 @@ version: 0.0
 os: linux
 files:
   - source: ./wordsCombo-1.0-SNAPSHOT-jar-with-dependencies.jar
-  - destination: /tmp
+  - destination: /tmp/wordsCombo-1.0.jar
