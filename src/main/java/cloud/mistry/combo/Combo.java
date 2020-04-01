@@ -41,8 +41,14 @@ public class Combo
         word = word.toUpperCase();
         logger.info("Analysing: " + word);
 
-        return null;
+        final ArrayList<Integer> numList = new ArrayList<>(6);
+
+        // TODO: Populate numList
+
+        return numList;
     }
+
+
 
     public List<String> lookupNumber(String nums)
     {

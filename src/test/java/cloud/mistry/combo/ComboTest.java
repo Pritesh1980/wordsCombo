@@ -3,6 +3,9 @@ package cloud.mistry.combo;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.Collection;
+
+import static com.google.common.primitives.Ints.asList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ComboTest
@@ -39,4 +42,16 @@ public class ComboTest
         System.out.println(exception.getMessage());
     }
 
+    @org.junit.jupiter.api.Test
+    public void testLookupValidWord01()
+    {
+       final String word = "AAAAAA";
+       Collection<?> ret = combo.lookupWord(word);
+
+        System.out.println(ret);
+        assertEquals(6, ret.size(), "Returned number list was of incorrect length.");
+
+        Collection<Integer> expected = asList(1, 1, 1, 1, 1, 1);
+        assertEquals(expected, ret, "Returned number array not as expected.");
+    }
 }
