@@ -75,7 +75,7 @@ public class Combo
         {
             if( !Character.isDigit(nums.charAt(i)) )
             {
-                throw new IllegalArgumentException(String.format("Error. All elements of passed in nums %s must be numbers", nums));
+                throw new IllegalArgumentException(String.format("Error. All elements of passed in nums must be numbers: %s", nums));
             }
         }
 

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Collection;
+import java.util.List;
 
 import static com.google.common.primitives.Ints.asList;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +23,7 @@ public class ComboTest
     public void testLookupNullWord()
     {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                ()-> combo.lookupWord(null));
+                ()-> combo.lookupWord(null), "Wrong exception thrown");
         System.out.println(exception.getMessage());
     }
 
@@ -30,7 +31,7 @@ public class ComboTest
     public void testLookupShortWord()
     {
         Throwable exception = assertThrows(IllegalArgumentException.class,
-                ()-> combo.lookupWord("BOO"));
+                ()-> combo.lookupWord("BOO"), "Wrong exception thrown");
         System.out.println(exception.getMessage());
     }
 
@@ -92,5 +93,44 @@ public class ComboTest
 
         Collection<Integer> expected = asList(8, 1, 4, 4, 5, 3);
         assertEquals(expected, ret, "Returned number array not as expected.");
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupNullNumber()
+    {
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                ()-> combo.lookupNumber(null), "Wrong exception thrown");
+        System.out.println(exception.getMessage());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupShortNumber()
+    {
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                ()-> combo.lookupNumber("BOO"), "Wrong exception thrown");
+        System.out.println(exception.getMessage());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupLongNumber()
+    {
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                ()-> combo.lookupNumber("COWABUNGA"), "Wrong exception thrown");
+        System.out.println(exception.getMessage());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupNonNumber()
+    {
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                ()-> combo.lookupNumber("12345X"), "Wrong exception thrown");
+        System.out.println(exception.getMessage());
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupNumberNoError()
+    {
+        List<String> retVals = combo.lookupNumber("123456");
+        assertNotEquals(null, retVals);
     }
 }
