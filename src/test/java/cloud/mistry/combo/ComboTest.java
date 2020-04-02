@@ -133,4 +133,18 @@ public class ComboTest
         List<String> retVals = combo.lookupNumber("123456");
         assertNotEquals(null, retVals);
     }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupNumber01()
+    {
+        List<String> retVals = combo.lookupNumber("814453");
+        assertNotEquals(null, retVals);
+    }
+
+    @org.junit.jupiter.api.Test
+    public void testLookupNumber02()
+    {
+        List<String> retVals = combo.lookupNumber("813358");
+        assertNotEquals(null, retVals);
+    }
 }

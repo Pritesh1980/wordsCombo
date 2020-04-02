@@ -2,11 +2,15 @@ package cloud.mistry.combo;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
 
 public class Combo
 {
@@ -64,6 +68,12 @@ public class Combo
     }
 
 
+    /**
+     * Converts a 6 digit number into potential real words that could be generated from them.
+     *
+     * @param nums 6 digit number, passed in as a String.
+     * @return The potential words that can be generated from the input numbers.
+     */
     public List<String> lookupNumber(String nums)
     {
         if( nums==null || nums.length()!=6 )
@@ -81,11 +91,93 @@ public class Combo
 
         logger.info("Analysing: " + nums);
 
-        ArrayList<String> retVals = new ArrayList<>(1);
+        HashMap allCombos = new HashMap(6);
+        for( int pos=1; pos<7; pos++ )
+        {
+            //System.out.println(nums.charAt(pos-1));
+            int index = Character.digit(nums.charAt(pos-1), 10);
+            allCombos.put( pos, ALPHABET.get(index));
+        }
+        logger.info( "All combinations of letters = \n" + allCombos );
 
-        // TODO: Populate retVals
+        Set<Character> set1 = (Set<Character>) allCombos.get(1);
+
+        Set<List<Character>> retSet = Sets.cartesianProduct(
+                (Set<Character>) allCombos.get(1),
+                (Set<Character>) allCombos.get(2),
+                (Set<Character>) allCombos.get(3),
+                (Set<Character>) allCombos.get(4),
+                (Set<Character>) allCombos.get(5),
+                (Set<Character>) allCombos.get(6)
+        );
+
+
+        //logger.trace(retSet);
+
+        ArrayList<String> retVals = convertCharsToStrings(retSet);
+        logger.debug(String.format("%d items in set", retVals.size()));
+
+        // Remove non-words from set
+        removeNoneWords(retVals);
+
+        logger.debug(String.format("%d items in filtered set", retVals.size()));
+        logger.trace(retVals);
 
         return retVals;
+    }
+
+    /**
+     * Filters out words that are not in the standard linux words file.
+     *
+     * @param values The list to filter.
+     */
+    private void removeNoneWords(ArrayList<String> values)
+    {
+        Set<String> sixLetterWords = new HashSet<>(42000);
+
+        // Put dictionary into set
+        try
+        {
+            Files.lines(Paths.get("/usr/share/dict/words")).
+                    filter(line -> line.length()==6).
+                    //forEach(word -> sixLetterWords.add(word.substring(0,6).toUpperCase()));
+                    forEach(word -> sixLetterWords.add(word.toUpperCase()));
+
+            logger.info("Number of 6 letter words = " + sixLetterWords.size());
+            logger.info(sixLetterWords);
+
+            // Do a set union to only keep appropriate words in my main list
+            values.retainAll(sixLetterWords);
+        }
+        catch (IOException e)
+        {
+            logger.error("Unable to find words file in /usr/share/dict/words");
+        }
+    }
+
+    /**
+     * Converts a Set of Lists of Characters into an Array of Strings.
+     *
+     * @param theSet The Set of List of Characters.
+     * @return Array of Strings.
+     */
+    private ArrayList<String> convertCharsToStrings(Set<List<Character>> theSet)
+    {
+        ArrayList<String> retStrings = new ArrayList<>(theSet.size());
+
+        for( List<Character> charList : theSet )
+        {
+            StringBuilder sb = new StringBuilder(charList.size());
+
+            for( Character ch : charList )
+            {
+                sb.append(ch);
+            }
+
+            retStrings.add(sb.toString());
+        }
+
+        return retStrings;
     }
 
 
