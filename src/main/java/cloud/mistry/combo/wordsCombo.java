@@ -1,10 +1,17 @@
 package cloud.mistry.combo;
 
+import software.amazon.codeguruprofilerjavaagent.Profiler;
+
 public class wordsCombo
 {
 
     public static void main(String[] args)
     {
+        // AWS CodeGuru profiler
+        new Profiler.Builder()
+                .profilingGroupName("JavaWordsComboProfileGroup")
+                .build().start();
+
         System.out.println("Starting Word Combination Analysis\n");
 
         final Combo myCombo = new Combo();
