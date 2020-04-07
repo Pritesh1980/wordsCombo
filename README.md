@@ -19,3 +19,8 @@ Usage:
 
   Build: docker build -t combo:0.0.1 .
   Run: docker run -p 8080:8080 combo:0.0.1
+
+# Swagger
+Swagger now added.
+http://localhost:8080/swagger-ui.html
+http://localhost:8080/v2/api-docs
