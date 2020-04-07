@@ -11,12 +11,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-
 public class Combo
 {
     private static final Logger logger = LogManager.getLogger("Combo");
     private final int CHARS_IN_ALPHABET = 26;
-    private Multimap<Integer,Character> ALPHABET = HashMultimap.create(26,3);
+    private static Multimap<Integer,Character> ALPHABET = HashMultimap.create(26,3);
 
 
     /**
