@@ -24,7 +24,7 @@ public class Combo
     public Combo()
     {
         initialiseAlphabet();
-        logger.info("Alphabet: " +ALPHABET);
+        logger.debug("Alphabet: " +ALPHABET);
     }
 
 
@@ -75,6 +75,8 @@ public class Combo
      */
     public List<String> lookupNumber(String nums)
     {
+        long startTime = System.nanoTime();
+
         if( nums==null || nums.length()!=6 )
         {
             throw new IllegalArgumentException(String.format("Error. %s needs to be a 6 character string", nums));
@@ -97,7 +99,7 @@ public class Combo
             int index = Character.digit(nums.charAt(pos-1), 10);
             allCombos.put( pos, ALPHABET.get(index));
         }
-        logger.info( "All combinations of letters = \n" + allCombos );
+        logger.debug( "All combinations of letters = \n" + allCombos );
 
         Set<Character> set1 = (Set<Character>) allCombos.get(1);
 
@@ -122,6 +124,14 @@ public class Combo
         logger.debug(String.format("%d items in filtered set", retVals.size()));
         logger.trace(retVals);
 
+        long endTime = System.nanoTime();
+
+        long duration = endTime - startTime;
+
+        logger.info(String.format("Time to lookup %s was %dms", nums, duration/1_000_000));
+
+        logger.info(String.format("%s returned %d results%n", nums, retVals.size() ));
+
         return retVals;
     }
 
@@ -137,13 +147,18 @@ public class Combo
         // Put dictionary into set
         try
         {
-            Files.lines(Paths.get("/usr/share/dict/words")).
-                    filter(line -> line.length()==6).
-                    //forEach(word -> sixLetterWords.add(word.substring(0,6).toUpperCase()));
-                    forEach(word -> sixLetterWords.add(word.toUpperCase()));
+            // Gets all 6 letter words from dictionary
+//            Files.lines(Paths.get("/usr/share/dict/words")).
+//                    filter(line -> line.length()==6).
+//                    forEach(word -> sixLetterWords.add(word.toUpperCase()));
 
-            logger.info("Number of 6 letter words = " + sixLetterWords.size());
-            logger.info(sixLetterWords);
+            // Gets all 6+ letter words
+            Files.lines(Paths.get("/usr/share/dict/words")).
+                    filter(line -> line.length()>=6).
+                    forEach(word -> sixLetterWords.add(word.substring(0,6).toUpperCase()));
+
+            logger.debug("Number of 6 letter words = " + sixLetterWords.size());
+            logger.trace(sixLetterWords);
 
             // Do a set union to only keep appropriate words in my main list
             values.retainAll(sixLetterWords);

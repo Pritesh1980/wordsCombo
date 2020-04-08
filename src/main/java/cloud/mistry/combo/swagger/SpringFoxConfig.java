@@ -23,7 +23,7 @@ public class SpringFoxConfig
                 .paths(PathSelectors.regex("/.*"))
                 .build().apiInfo(apiEndPointsInfo());
     }
-    
+
     private ApiInfo apiEndPointsInfo()
     {
         return new ApiInfoBuilder().title("Spring Boot REST API")
