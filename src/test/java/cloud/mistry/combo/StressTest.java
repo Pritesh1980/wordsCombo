@@ -20,7 +20,7 @@ public class StressTest
 //        }
 
         // Parallel stream version
-        IntStream range = IntStream.range(0, 1_000_000);
+        IntStream range = IntStream.range(0, 1_000);
         range
             .parallel()
             .forEach( e -> combo.lookupNumber(String.format("%06d", e)));

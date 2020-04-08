@@ -16,7 +16,7 @@ public class Combo
     private static final Logger logger = LogManager.getLogger("Combo");
     private final int CHARS_IN_ALPHABET = 26;
     private static Multimap<Integer,Character> ALPHABET = HashMultimap.create(26,3);
-
+    private static Set<String> sixLetterWords = new HashSet<>(42000);
 
     /**
      * Public constructor. Simply initialises an Alphabet to perform lookups against.
@@ -24,6 +24,7 @@ public class Combo
     public Combo()
     {
         initialiseAlphabet();
+        initialiseSixLetterWords();
         logger.debug("Alphabet: " +ALPHABET);
     }
 
@@ -142,7 +143,7 @@ public class Combo
      */
     private void removeNoneWords(ArrayList<String> values)
     {
-        Set<String> sixLetterWords = new HashSet<>(42000);
+        //Set<String> sixLetterWords = new HashSet<>(42000);
 
         // Put dictionary into set
         try
@@ -213,6 +214,30 @@ public class Combo
 
             ALPHABET.put(currCount, aChar);
             aChar++;
+        }
+    }
+
+    private void initialiseSixLetterWords()
+    {
+        // Put dictionary into set
+        try
+        {
+            // Gets all 6 letter words from dictionary
+//            Files.lines(Paths.get("/usr/share/dict/words")).
+//                    filter(line -> line.length()==6).
+//                    forEach(word -> sixLetterWords.add(word.toUpperCase()));
+
+            // Gets all 6+ letter words
+            Files.lines(Paths.get("/usr/share/dict/words")).
+                    filter(line -> line.length()>=6).
+                    forEach(word -> sixLetterWords.add(word.substring(0,6).toUpperCase()));
+
+            logger.debug("Number of 6 letter words = " + sixLetterWords.size());
+            logger.trace(sixLetterWords);
+        }
+        catch (IOException e)
+        {
+            logger.error("Unable to find words file in /usr/share/dict/words");
         }
     }
 }
