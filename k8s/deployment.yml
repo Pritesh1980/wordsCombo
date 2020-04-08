@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: combo-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: combo
+  template:
+    metadata:
+      labels:
+        app: combo
+    spec:
+      containers:
+        - name: combo
+          image: combo:0.0.2
+          ports:
+            - containerPort: 8080
