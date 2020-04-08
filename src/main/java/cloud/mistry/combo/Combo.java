@@ -13,10 +13,10 @@ import java.util.*;
 
 public class Combo
 {
-    private static final Logger logger = LogManager.getLogger("Combo");
+    private static final Logger logger = LogManager.getLogger(Combo.class.getName());
     private final int CHARS_IN_ALPHABET = 26;
     private static Multimap<Integer,Character> ALPHABET = HashMultimap.create(26,3);
-    private static Set<String> sixLetterWords = new HashSet<>(42000);
+    private static Set<String> sixLetterWords = new HashSet<>(85000);
 
     /**
      * Public constructor. Simply initialises an Alphabet to perform lookups against.
@@ -96,13 +96,10 @@ public class Combo
         HashMap allCombos = new HashMap(6);
         for( int pos=1; pos<7; pos++ )
         {
-            //System.out.println(nums.charAt(pos-1));
             int index = Character.digit(nums.charAt(pos-1), 10);
             allCombos.put( pos, ALPHABET.get(index));
         }
         logger.debug( "All combinations of letters = \n" + allCombos );
-
-        Set<Character> set1 = (Set<Character>) allCombos.get(1);
 
         Set<List<Character>> retSet = Sets.cartesianProduct(
                 (Set<Character>) allCombos.get(1),
@@ -113,14 +110,13 @@ public class Combo
                 (Set<Character>) allCombos.get(6)
         );
 
-
         //logger.trace(retSet);
 
         ArrayList<String> retVals = convertCharsToStrings(retSet);
         logger.debug(String.format("%d items in set", retVals.size()));
 
         // Remove non-words from set
-        removeNoneWords(retVals);
+        retVals.retainAll(sixLetterWords);
 
         logger.debug(String.format("%d items in filtered set", retVals.size()));
         logger.trace(retVals);
@@ -130,45 +126,12 @@ public class Combo
         long duration = endTime - startTime;
 
         logger.info(String.format("Time to lookup %s was %dms", nums, duration/1_000_000));
+        logger.info(String.format("%s returned %d results: %s%n", nums, retVals.size(), retVals ));
 
-        logger.info(String.format("%s returned %d results%n", nums, retVals.size() ));
 
         return retVals;
     }
 
-    /**
-     * Filters out words that are not in the standard linux words file.
-     *
-     * @param values The list to filter.
-     */
-    private void removeNoneWords(ArrayList<String> values)
-    {
-        //Set<String> sixLetterWords = new HashSet<>(42000);
-
-        // Put dictionary into set
-        try
-        {
-            // Gets all 6 letter words from dictionary
-//            Files.lines(Paths.get("/usr/share/dict/words")).
-//                    filter(line -> line.length()==6).
-//                    forEach(word -> sixLetterWords.add(word.toUpperCase()));
-
-            // Gets all 6+ letter words
-            Files.lines(Paths.get("/usr/share/dict/words")).
-                    filter(line -> line.length()>=6).
-                    forEach(word -> sixLetterWords.add(word.substring(0,6).toUpperCase()));
-
-            logger.debug("Number of 6 letter words = " + sixLetterWords.size());
-            logger.trace(sixLetterWords);
-
-            // Do a set union to only keep appropriate words in my main list
-            values.retainAll(sixLetterWords);
-        }
-        catch (IOException e)
-        {
-            logger.error("Unable to find words file in /usr/share/dict/words");
-        }
-    }
 
     /**
      * Converts a Set of Lists of Characters into an Array of Strings.
@@ -237,7 +200,7 @@ public class Combo
         }
         catch (IOException e)
         {
-            logger.error("Unable to find words file in /usr/share/dict/words");
+            logger.error("Unable to find words file in [/usr/share/dict/words]. Exception: " + e.getMessage());
         }
     }
 }

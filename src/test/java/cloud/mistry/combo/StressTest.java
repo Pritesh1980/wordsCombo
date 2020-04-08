@@ -13,14 +13,14 @@ public class StressTest
         long startTime = System.nanoTime();
 
         // Loop version
-//        for( int i=0; i<1_000; i++ )
+//        for( int i=0; i<1_000_000; i++ )
 //        {
 //            String strNum = String.format("%06d", i);
 //            combo.lookupNumber(strNum);
 //        }
 
         // Parallel stream version
-        IntStream range = IntStream.range(0, 1_000);
+        IntStream range = IntStream.range(0, 1_000_000);
         range
             .parallel()
             .forEach( e -> combo.lookupNumber(String.format("%06d", e)));
