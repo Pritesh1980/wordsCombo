@@ -8,4 +8,6 @@ RUN mkdir /usr/share/dict
 COPY words /usr/share/dict/words
 COPY target/wordsCombo-1.0-SNAPSHOT.jar /combo.jar
 
+EXPOSE 80
+
 CMD java -jar /combo.jar
