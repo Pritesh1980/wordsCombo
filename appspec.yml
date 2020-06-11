@@ -3,3 +3,6 @@ os: linux
 files:
   - source: ./wordsCombo-1.0-SNAPSHOT.jar
     destination: /tmp
+hooks:
+  ApplicationStart:
+    - location: java -jar /tmp/wordsCombo-1.0-SNAPSHOT.jar
