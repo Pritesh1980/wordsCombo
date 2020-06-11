@@ -3,6 +3,8 @@ os: linux
 files:
   - source: ./wordsCombo-1.0-SNAPSHOT.jar
     destination: /tmp
+  - source: ./start.sh
+    destination: /tmp
 hooks:
   ApplicationStart:
     - location: /tmp/start.sh
