@@ -14,5 +14,5 @@ permissions:
 
 hooks:
   ApplicationStart:
-    - location: /tmp/start.sh
+    - location: start.sh
 
