@@ -5,6 +5,14 @@ files:
     destination: /tmp
   - source: ./start.sh
     destination: /tmp
+
+permissions:
+  - object: /tmp
+    pattern: "*.sh"
+    owner: ec2-user
+    mode: 555
+
 hooks:
   ApplicationStart:
     - location: /tmp/start.sh
+
