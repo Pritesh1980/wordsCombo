@@ -5,4 +5,4 @@ files:
     destination: /tmp
 hooks:
   ApplicationStart:
-    - location: java -jar /tmp/wordsCombo-1.0-SNAPSHOT.jar
+    - location: /tmp/start.sh
