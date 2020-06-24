@@ -1,1 +1,1 @@
-java -jar /tmp/wordsCombo-1.0-SNAPSHOT.jar >run.out 2>run.err &
+java -jar /tmp/wordsCombo-1.0-SNAPSHOT.jar  > /dev/null 2> /dev/null < /dev/null &
