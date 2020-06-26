@@ -22,7 +22,7 @@ class ComboRestController
         }
         else
         {
-            return "Combo Analysis ready to rock and roll!";
+            return "Combo Analysis ready to rock and roll - 2020!";
         }
     }
 
