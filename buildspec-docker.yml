@@ -14,7 +14,7 @@ phases:
       - echo Building Java package...
       - mvn package
       - echo Building Docker image...
-      - docker build -t combo:0.0.1 .
+      - docker build -t wordscombo .
       - docker tag wordscombo:latest 615667466743.dkr.ecr.eu-west-1.amazonaws.com/wordscombo:latest
   post_build:
     commands:
