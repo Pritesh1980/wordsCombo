@@ -17,4 +17,5 @@ artifacts:
     - target/wordsCombo-1.0-SNAPSHOT.jar
     - appspec.yml
     - src/scripts/start.sh
+    - imagedefinitions.json
   discard-paths: yes
